@@ -1,0 +1,13 @@
+Features -
+- Microservice based
+- Integrated telemetry (Otel, loki, promethus, jeagerUI, grafana)
+- video/audio files are loaded using streams and thus optimizing memory consumption by 300% ( before 300mb usage -> after 3mb)
+- Jwt auth implemented from scratch
+- passwords are base64 encoded
+- communication between servers is done via gRPC protocol, optimizing communication by 400%
+- video/audio is streamd to cliend via http live streaming (HLS) thus reducing load time
+- pre loads next audio/video so that user doesn't experience any lag
+- All services are dockerised and can easily set up and run via docker
+- User can upload, delete songs, edit bio, chat with other users, see what song other users are listening to
+- UI is dynamic and components are dragable like in spotify webUI
+- Tests implemented using jest
