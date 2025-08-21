@@ -1,5 +1,6 @@
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
+import grpcClient from '../grpc/userService.js';
 
 
 const generateToken = (id) => {
@@ -32,11 +33,35 @@ export const registerUser = async (req, res) => {
         });
 
         if (user) {
-            res.status(201).json({
-                _id: user._id,
-                username: user.username,
-                email: user.email,
-                token: generateToken(user._id),
+            // res.status(201).json({
+            //     _id: user._id,
+            //     username: user.username,
+            //     email: user.email,
+            //     token: generateToken(user._id),
+            // });
+
+            grpcClient.RegisterUser({ username, email }, (err, response) => {
+                if (err) {
+                    console.error("gRPC Error:", err.message);
+                    // Don’t fail the request if gRPC call fails
+                    return res.status(201).json({
+                        _id: user._id,
+                        username: user.username,
+                        email: user.email,
+                        token: generateToken(user._id),
+                        grpcMessage: "gRPC call failed",
+                    });
+                }
+
+                // console.log("gRPC Response:", response);
+
+                res.status(201).json({
+                    _id: user._id,
+                    username: user.username,
+                    email: user.email,
+                    token: generateToken(user._id),
+                    // grpcMessage: response.message, // 👈 extra info from gRPC service
+                });
             });
         } else {
             res.status(400).json({ message: 'Invalid user data' });
