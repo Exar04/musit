@@ -93,3 +93,22 @@ export async function createAlbum(req, res) {
         });
     }
 };
+
+
+export async function deleteAlbum(req, res){
+    try {
+        const { id } = req.params
+
+        const album = await Album.findById(id)
+
+        await album.deleteOne();
+
+        return res.status(200).json({ message: "album deleted successfully" });
+    } catch (error) {
+        console.log("erroe in deleting song", error)
+        return res.status(500).json({ 
+            message: "Something went wrong while deleting the album", 
+            error: error.message 
+        });
+    }
+}
