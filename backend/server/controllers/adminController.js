@@ -60,3 +60,36 @@ export async function deleteSong(req, res){
         });
     }
 }
+
+export async function createAlbum(req, res) {
+    try {
+
+        const imageFile = req.files['image'] ? req.files['image'][0] : null;
+        // const songFile = req.files['song'] ? req.files['song'][0] : null;
+        if (imageFile == null) return res.status(400).json({ message: 'Image file is required' });
+        // if (songFile == null) return res.status(400).json({ message: 'Song file is required' });
+
+        const { title, artist, releaseYear } = req.body
+        const imageUrl = path.join("/uploads/images", imageFile.filename);
+        // const audioUrl = path.join("/uploads/songs", songFile.filename);
+
+        const album = new Album({
+            title,
+            artist,
+            releaseYear,
+            imageUrl,
+        })
+
+        await album.save()
+        res.status(200).json({
+            message: 'Album Successfully Created',
+            album: album
+        });
+    } catch (error){
+        console.log("Error in createAlbum", error)
+        return res.status(500).json({ 
+            message: "Something went wrong while creating the album", 
+            error: error.message 
+        });
+    }
+};
