@@ -1,12 +1,15 @@
 import { Router } from 'express';
-// import { registerUser, loginUser } from '../controllers/authController.js';
+import { getAllSongs, getFeaturedSongs, getMadeForYouSongs, getTrendingSongs } from '../controllers/songController.js';
 
 const router = Router();
 
-// router.post('/register', registerUser);
-// router.post('/login', loginUser);
+router.get('/', getAllSongs)
+router.get('/featured', getFeaturedSongs)
+router.get('/made-for-you', getMadeForYouSongs)
+router.get('/trending', getTrendingSongs)
 
-router.get('/', (req, res) => {
+
+router.get('/test', (req, res) => {
     res.status(200).json({ message: 'song route is working' });
 })
 

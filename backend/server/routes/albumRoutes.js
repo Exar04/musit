@@ -1,13 +1,9 @@
 import { Router } from 'express';
-// import { registerUser, loginUser } from '../controllers/authController.js';
+import { getAlbumsById, getAllAlbums } from '../controllers/albumController.js';
 
 const router = Router();
 
-// router.post('/register', registerUser);
-// router.post('/login', loginUser);
-
-router.get('/', (req, res) => {
-    res.status(200).json({ message: 'Album route is working' });
-})
+router.get('/', getAllAlbums)
+router.get('/:albumId', getAlbumsById)
 
 export default router;

@@ -112,3 +112,7 @@ export async function deleteAlbum(req, res){
         });
     }
 }
+
+export async function checkAdmin (req, res) {
+    res.status(200).json({ admin: true})
+}

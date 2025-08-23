@@ -86,3 +86,8 @@ Docker -
 ```zsh
 docker compose up
 ```
+
+
+#### TODO Learning for me - 
+- what is populate, push, pull, aggregate function in mongodb?
+- how does ref works in mongodb?
