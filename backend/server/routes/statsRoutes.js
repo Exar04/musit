@@ -1,12 +1,12 @@
 import { Router } from 'express';
-// import { registerUser, loginUser } from '../controllers/authController.js';
+import { getStats } from '../controllers/statsController.js';
+import { protect, requireAdmin } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
-// router.post('/register', registerUser);
-// router.post('/login', loginUser);
+router.get('/', protect, requireAdmin, getStats)
 
-router.get('/', (req, res) => {
+router.get('/test', (req, res) => {
     res.status(200).json({ message: 'stats route is working' });
 })
 

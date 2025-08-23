@@ -16,6 +16,7 @@ Features -
 - smooth UI animations making immersive ux.
 - statistical data for admin user
 - linux styled git commit for better developer usablility
+- Integrated user chat functionality where users can chat and see what their friends are listening to
 
 ---
 Internals -
@@ -87,7 +88,9 @@ Docker -
 docker compose up
 ```
 
-
+<!-- 
 #### TODO Learning for me - 
 - what is populate, push, pull, aggregate function in mongodb?
 - how does ref works in mongodb?
+- how exactly does gRPC works? also learn its internals 
+-->

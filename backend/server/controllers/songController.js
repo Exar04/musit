@@ -1,5 +1,4 @@
-import e from "express";
-import { Song } from "../models/Song.js";
+import { Song } from "../models/songModel.js";
 
 export const getAllSongs = async (req, res) => {
     try {

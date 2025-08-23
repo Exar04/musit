@@ -1,12 +1,12 @@
 import { Router } from 'express';
-// import { registerUser, loginUser } from '../controllers/authController.js';
+import { protect } from '../middleware/authMiddleware.js';
+import { getAllUsers } from '../controllers/userController.js';
 
 const router = Router();
 
-// router.post('/register', registerUser);
-// router.post('/login', loginUser);
+router.get('/', protect, getAllUsers)
 
-router.get('/', (req, res) => {
+router.get('/test', (req, res) => {
     res.status(200).json({ message: 'user route is working' });
 })
 
