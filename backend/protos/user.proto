@@ -3,6 +3,7 @@ syntax = "proto3";
 message Person {
   string username = 1;
   string email = 2;
+  string userid = 3;
 }
 
 message RegisterResponse {

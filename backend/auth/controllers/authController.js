@@ -3,10 +3,16 @@ import jwt from 'jsonwebtoken';
 import grpcClient from '../grpc/userService.js';
 
 
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '30d', // Token expires in 30 days
-    });
+const generateToken = (user) => {
+  return jwt.sign(
+    {
+      id: user._id,        // Mongo _id
+      username: user.username, // extra payload
+      email: user.email,       // optional
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '30d' }
+  );
 };
 
 // @desc    Register a new user
@@ -33,14 +39,8 @@ export const registerUser = async (req, res) => {
         });
 
         if (user) {
-            // res.status(201).json({
-            //     _id: user._id,
-            //     username: user.username,
-            //     email: user.email,
-            //     token: generateToken(user._id),
-            // });
-
-            grpcClient.RegisterUser({ username, email }, (err, response) => {
+            
+            grpcClient.RegisterUser({ username, email, userid: user._id.toString() }, (err, response) => {
                 if (err) {
                     console.error("gRPC Error:", err.message);
                     // Don’t fail the request if gRPC call fails
@@ -48,12 +48,12 @@ export const registerUser = async (req, res) => {
                         _id: user._id,
                         username: user.username,
                         email: user.email,
-                        token: generateToken(user._id),
+                        token: generateToken(user),
                         grpcMessage: "gRPC call failed",
                     });
                 }
 
-                // console.log("gRPC Response:", response);
+                console.log("gRPC Response:", response);
 
                 res.status(201).json({
                     _id: user._id,
@@ -90,7 +90,7 @@ export const loginUser = async (req, res) => {
             _id: user._id,
             username: user.username,
             email: user.email,
-            token: generateToken(user._id),
+            token: generateToken(user),
         });
     } else {
         res.status(401).json({ message: 'Invalid credentials' });

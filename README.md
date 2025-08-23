@@ -2,7 +2,7 @@ Features -
 - Microservice based
 - Integrated telemetry (Otel, loki, promethus, jeagerUI, grafana)
 - video/audio files are loaded using streams and thus optimizing memory consumption by 300% ( before 300mb usage -> after 3mb)
-- Jwt auth implemented from scratch
+- Jwt auth implemented from scratch with register user, login user, and refresh token functionality
 - passwords are base64 encoded
 - communication between servers is done via gRPC protocol, optimizing communication by 400%
 - video/audio is streamd to cliend via http live streaming (HLS) thus reducing load time
@@ -10,4 +10,78 @@ Features -
 - All services are dockerised and can easily set up and run via docker
 - User can upload, delete songs, edit bio, chat with other users, see what song other users are listening to
 - UI is dynamic and components are dragable like in spotify webUI
+- State management using zustand
 - Tests implemented using jest
+- Infinte scroll ... in the queue list of songs user will get more songs as they scroll down
+- smooth UI animations making immersive ux.
+- statistical data for admin user
+
+---
+Internals -
+- auth-db is running on port 27017
+- service-db is running on port 27020
+- frontend is written is typescript
+- microservices in backend - 
+    - auth 
+    - service ( This handles serving songs to the users)
+    - chat ( Handles chat between users and helps users see what their friends are listening to)
+    - admin ( This service is used to upload songs to database)
+
+
+# Musit – A Microservice-based Music Streaming Platform
+### Features
+- Microservice Architecture – Scalable, modular backend.
+- Integrated Telemetry – Observability with OpenTelemetry, Loki, Prometheus, Jaeger UI & Grafana.
+- Optimized Streaming – Audio served via streams, reducing memory usage by 300% (300 MB → 3 MB).
+- Client playback powered by HTTP Live Streaming (HLS).
+- Preloads next track for zero-lag experience.
+- Custom JWT auth (register, login, refresh tokens).
+- Passwords base64 encoded.
+- High-performance Communication – Services talk over gRPC, reducing latency by 400%.
+### User Features
+- Upload / delete songs 🎶
+- Edit bio ✍️
+- Upload new songs
+- Chat with friends 💬
+- Infinite scroll in queue list 🔄
+- See what others are listening to 👀
+- View detailed statistical insights 📊
+- preloads next song for better user experience
+- Smooth draggable UI components (like Spotify Web UI).
+
+### Dev Features –
+- View detailed statistical insights with telemetry
+- Fully Containerized – Run everything with Docker.
+- Testing – Automated tests with Jest.
+
+### Internals
+#### Databases:
+- `auth-db` → `Port::27017`
+- `service-db` → `Port::27020`
+- `chat-db` → `Port::27030`
+
+####  Frontend: `TypeScript (React)`.
+
+#### Backend Microservices:
+- `auth` → Handles authentication & JWT. `Javascript`
+    - dependencies -> `Expressjs` `gRPC`
+- `service` → Serves songs & streaming logic. `Javascript`
+    - dependencies -> `Mutler` `Expressjs` `gRPC`
+- `chat` → User chat + friend activity. `Golang`
+    - dependencies -> GorillaWebsocket 
+<!-- - `admin` → Upload & manage songs. `Javascript` -->
+
+
+## How to use it :
+
+### set up ->
+Manually - 
+```bash
+cd backend/server && npm install && npm start
+cd backend/auth && npm install && npm start
+cd frontend && npm install && npm start
+```
+Docker - 
+```zsh
+docker compose up
+```
