@@ -7,6 +7,7 @@ import {
 } from 'react';
 import type { ReactNode } from 'react';
 import axios, { type InternalAxiosRequestConfig } from 'axios';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 interface AuthContextType {
   user: string | null;
@@ -32,6 +33,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const { checkAdminStatus } = useAuthStore()
 
   const login = (userData: string, token: string) => {
     setUser(userData);
@@ -47,17 +49,23 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   };
-
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    const init = async () => {
+      const storedToken = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
 
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(storedUser);
-    }
-    setLoading(false);
+      if (storedToken && storedUser) {
+        setToken(storedToken);
+        setUser(storedUser);
+        await checkAdminStatus(); // ✅ now you can await
+      }
+
+      setLoading(false);
+    };
+
+    init();
   }, []);
+
 
   useLayoutEffect(() => {
     const authInterceptor = api.interceptors.request.use(

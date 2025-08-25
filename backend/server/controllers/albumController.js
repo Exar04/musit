@@ -3,6 +3,8 @@ import { Album } from "../models/albumModel.js";
 export const getAllAlbums = async (req, res) => {
     try {
         const albums = await Album.find();
+        // we are waiting here for 2 sec just so showcase some of our features
+        await new Promise(resolve => setTimeout(resolve, 2000));
         res.status(200).json(albums)
     } catch (error) {
         console.log("Error in getAllAlbums : ", error)

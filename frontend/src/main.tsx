@@ -4,15 +4,19 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/authContext.js';
 
 import './index.css'
-import App from './App.tsx'
+// import App from './App.tsx'
 import { Login } from './pages/login.tsx';
 import { Signup } from './pages/siginup.tsx';
 import { NoPage } from './pages/noPage.tsx';
+import { HomePage } from './pages/homePage.tsx';
+import { ChatPage } from './pages/chatPage.tsx';
+import MainLayout from './layout/mainLayout.tsx';
+import { AlbumPage } from './pages/albumPage.tsx';
 
 function PrivateRoute() {
   const { token } = useAuth();
   console.log('PrivateRoute token:', token);
-  return token ? <App /> : <Navigate to="/login" replace />;
+  return token ? <MainLayout /> : <Navigate to="/login" replace />;
 }
 
 const router = createBrowserRouter([
@@ -22,10 +26,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <PrivateRoute />,
     children: [
-      // { path: "/", element: <App /> },
-      // { path: "/", element: <ProductList /> },
-      // { path: "/product/:id", element: <ProductDetail /> },
-      // { path: "/uploadproduct", element: <UploadProduct /> },
+      { path: "/", element: <HomePage /> },
+      { path: "/chat", element: <ChatPage /> },
+      { path: "/album/:albumId", element: <AlbumPage /> },
     ],
   },
   { path: '*', element: <NoPage /> }, // ⬅️ catch-all route

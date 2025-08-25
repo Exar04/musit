@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/authContext.tsx';
 import { useNavigate } from "react-router";
-import { authApi } from "../api.tsx";
+import { authApi } from "../lib/api.ts";
 
 import type { FormEvent } from 'react';
 import type { AxiosError } from 'axios';

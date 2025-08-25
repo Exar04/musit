@@ -4,7 +4,7 @@ import { getAllUsers } from '../controllers/userController.js';
 
 const router = Router();
 
-router.get('/', protect, getAllUsers)
+router.get('/getAllUsers', protect, getAllUsers)
 
 router.get('/test', (req, res) => {
     res.status(200).json({ message: 'user route is working' });

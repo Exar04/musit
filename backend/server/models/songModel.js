@@ -22,8 +22,8 @@ const SongSchema = new Schema({
         default: 0,
     },
     duration: {
-        // type: Number,
-        type: String,
+        type: Number,
+        // type: String,
         required: true,
     },
     albumId: {

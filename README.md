@@ -17,6 +17,8 @@ Features -
 - statistical data for admin user
 - linux styled git commit for better developer usablility
 - Integrated user chat functionality where users can chat and see what their friends are listening to
+- Ambient shader for albums background based on album cover
+- Global Search in frontend with `command + k`
 
 ---
 Internals -
@@ -49,7 +51,7 @@ Internals -
 - See what others are listening to 👀
 - View detailed statistical insights 📊
 - preloads next song for better user experience
-- Smooth draggable UI components (like Spotify Web UI).
+- Smooth resizable UI components (like Spotify Web UI).
 
 ### Dev Features –
 - View detailed statistical insights with telemetry
@@ -72,6 +74,7 @@ Internals -
 - `chat` → User chat + friend activity. `Golang`
     - dependencies -> GorillaWebsocket 
 <!-- - `admin` → Upload & manage songs. `Javascript` -->
+
 
 
 ## How to use it :
