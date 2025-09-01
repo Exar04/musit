@@ -16,14 +16,14 @@ export const useAuthStore = create<AuthStore>((set) => ({
     isLoading: false,
     error: null,
     checkAdminStatus: async () => {
-            set({isLoading: true, error: null}) 
+        set({ isLoading: true, error: null })
         try {
             const response = await serviceApi.get('admin/check')
             console.log("d admin: ", response.data.admin)
-            set({isAdmin: response.data.admin})
-        } catch (err ) {
+            set({ isAdmin: response.data.admin })
+        } catch (err) {
             if (err instanceof AxiosError) {
-                set({isAdmin:false, error: err.response?.data?.message})
+                set({ isAdmin: false, error: err.response?.data?.message })
             }
         } finally {
             set({ isLoading: false })

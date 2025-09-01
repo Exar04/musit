@@ -1,10 +1,11 @@
 import { useMusicStore } from "@/stores/useMusicStore"
 import FeaturedGridSkeleton from "./skeletions/featuredGridSkeleton"
+import { PlayButton } from "./playButton"
 
 export const FeaturedSection = () => {
     const { isLoadingFeaturedSongs, featuredSongs, error } = useMusicStore()
     if (isLoadingFeaturedSongs) return < FeaturedGridSkeleton />
-    if (error) return <p className=" text-red-500 mb-4 text-lg text-center">{error}aaa</p>
+    if (error) return <p className=" text-red-500 mb-4 text-lg text-center">{error}</p>
 
     return (
         <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -15,8 +16,8 @@ export const FeaturedSection = () => {
                          <p className="font-medium truncate">{song.title}</p>
                          <p className="text-sm text-zinc-400 truncate">{song.artist}</p>
                     </div>
+                    <PlayButton song={song}/>
                 </div>
-                // TODO: add play button
             ))}
         </div>
     )

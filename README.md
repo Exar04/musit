@@ -18,8 +18,7 @@ Features -
 - linux styled git commit for better developer usablility
 - Integrated user chat functionality where users can chat and see what their friends are listening to
 - Ambient shader for albums background based on album cover
-- Global Search in frontend with `command + k`
-
+- Global Search in frontend with `command + k` which has `lazyload` functionality so that app doesn't get blocked
 ---
 Internals -
 - auth-db is running on port 27017

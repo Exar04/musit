@@ -1,6 +1,7 @@
 import type { SongType } from "@/types"
 import SectionGridSkeleton from "./skeletions/sectionGridSkeleton"
 import { Button } from "./ui/button"
+import { PlayButton } from "./playButton"
 
 type SectionGridProps = {
     title: string
@@ -23,8 +24,8 @@ export const SectionGrid = ({title, songs, isLoading}: SectionGridProps) => {
                         <div className=" relative mb-4">
                             <div className="rounded-md shadow-lg overflow-hidden">
                                 <img src={song.imageUrl} alt= {song.title} className=" w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>
-                                {/* ToDo: add play button */}
                             </div>
+                            <PlayButton song={song}/>
                         </div>
                         <h3 className=" font-medium mb-2 truncate px-1"> {song.title} </h3>
                         <p className=" text-sm text-zinc-400 truncate px-1">{song.artist}</p>

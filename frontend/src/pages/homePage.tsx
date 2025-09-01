@@ -7,8 +7,8 @@ import { useEffect } from "react"
 export const HomePage = () => {
     const { 
         fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs,
-        isLoadingFeaturedSongs, isLoadingMadeForYouSongs, isLoadingTrendingSongs,
-        featuredSongs, madeForYouSongs, trendingSongs
+        isLoadingMadeForYouSongs, isLoadingTrendingSongs,
+        madeForYouSongs, trendingSongs
     } = useMusicStore()
 
     useEffect(() => {
