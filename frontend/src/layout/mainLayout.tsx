@@ -4,6 +4,7 @@ import { LeftSidebar } from "./components/leftSidebar";
 import { Topbar } from "@/components/Topbar";
 import { RightSidebar } from "./components/rightSidebar";
 import { AudioPlayer } from "./components/audioPlayer";
+import { PlaybackControls } from "./components/playbackControls";
 
 function MainLayout() {
   const isMobile = false
@@ -32,7 +33,7 @@ function MainLayout() {
         </ResizablePanel>
 
       </ResizablePanelGroup>
-      {/* <AudioPlayer /> */}
+      <PlaybackControls />
     </div>
   )
 }

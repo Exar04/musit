@@ -20,7 +20,7 @@ export const SectionGrid = ({title, songs, isLoading}: SectionGridProps) => {
             </div>
             <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {songs.map((song) => (
-                    <div key={song._id} className=" bg-zinc-800/50 rounded-md hover:bg-zinc-700/50 transition-all group cursor-pointer">
+                     <div key={song._id} className=" bg-zinc-800/50 rounded-md hover:bg-zinc-700/50 transition-all group cursor-pointer">
                         <div className=" relative mb-4">
                             <div className="rounded-md shadow-lg overflow-hidden">
                                 <img src={song.imageUrl} alt= {song.title} className=" w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"/>

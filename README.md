@@ -19,6 +19,7 @@ Features -
 - Integrated user chat functionality where users can chat and see what their friends are listening to
 - Ambient shader for albums background based on album cover
 - Global Search in frontend with `command + k` which has `lazyload` functionality so that app doesn't get blocked
+- create a link to invite/add friend to your friend list
 ---
 Internals -
 - auth-db is running on port 27017
@@ -95,4 +96,5 @@ docker compose up
 - what is populate, push, pull, aggregate function in mongodb?
 - how does ref works in mongodb?
 - how exactly does gRPC works? also learn its internals 
+- Learn how these event listeners work -> audio.addEventListener("timeupdate", updateTime) && audio.removeEventListener("loadedmetadata", updateDuration)
 -->
