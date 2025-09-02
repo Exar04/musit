@@ -1,7 +1,7 @@
 import { useAuth } from "@/context/authContext"
 import { useChatStore } from "@/stores/useChatStore"
 import { ScrollArea } from "@radix-ui/react-scroll-area"
-import { Music, Users } from "lucide-react"
+import { Music, PlusIcon, Users } from "lucide-react"
 import { useEffect } from "react"
 import { Avatar } from "./ui/avatar"
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
@@ -30,9 +30,16 @@ export const FriendsActivity = () => {
     return (
         <div className="w-full h-full bg-zinc-900/80 rounded-lg flex flex-col">
             <div className=" p-4 flex justify-between items-center bg-zinc-800/70 rounded-t-lg">
-                <div className=" flex items-center gap-2">
-                    <Users className="size-5 shrink-0" />
-                    <h2 className=" font-extralight font-mono text-xs">Friends listening to</h2>
+                <div className=" flex items-center gap-2 justify-between w-full">
+                    <div className=" flex items-center gap-2">
+                        <Users className="size-5 shrink-0" />
+                        <h2 className=" font-extralight font-mono text-xs">Friends listening to</h2>
+                    </div>
+                    <div className=" bg-white/50 hover:bg-white rounded-md hover:scale-115 hover:rotate-180 duration-150">
+                        <PlusIcon className=" text-zinc-700 size-6 hover:rotate-180 duration-300"/>
+                    </div>
+                    {/* we will use this icon when we implement qr feature */}
+                    {/* <QrCode className=" text-zinc-500 h-5 w-5 hover:text-white"/> */}
                 </div>
             </div>
             {!user && <LoginPrompt />}
