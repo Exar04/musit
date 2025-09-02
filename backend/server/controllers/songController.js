@@ -4,6 +4,7 @@ export const getAllSongs = async (req, res) => {
     try {
         // Sort by createdAt ( newest ones will be at the top )
         const songs = await Song.find().sort({ createdAt: -1 });
+        return res.status(200).json(songs);
     }catch (error) {
         console.log("Error in getAllSongs : ", error)
         return res.status(500).json({ 

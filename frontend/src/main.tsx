@@ -12,6 +12,7 @@ import { HomePage } from './pages/homePage.tsx';
 import { ChatPage } from './pages/chatPage.tsx';
 import MainLayout from './layout/mainLayout.tsx';
 import { AlbumPage } from './pages/albumPage.tsx';
+import { AdminPage } from './pages/admin/adminPage.tsx';
 
 function PrivateRoute() {
   const { token } = useAuth();
@@ -22,6 +23,7 @@ function PrivateRoute() {
 const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
+  { path:"/admin", element: <AdminPage />},
   {
     path: "/",
     element: <PrivateRoute />,

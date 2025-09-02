@@ -79,7 +79,7 @@ export const PlaybackControls = () => {
 						<Button
 							size='icon'
 							variant='ghost'
-							className='hidden sm:inline-flex hover:text-white text-zinc-400'
+							className='hidden sm:inline-flex hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
 						>
 							<Shuffle className='h-4 w-4' />
 						</Button>
@@ -87,7 +87,7 @@ export const PlaybackControls = () => {
 						<Button
 							size='icon'
 							variant='ghost'
-							className='hover:text-white text-zinc-400'
+							className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
 							onClick={playPrevious}
 							disabled={!currentSong}
 						>
@@ -105,7 +105,7 @@ export const PlaybackControls = () => {
 						<Button
 							size='icon'
 							variant='ghost'
-							className='hover:text-white text-zinc-400'
+							className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
 							onClick={playNext}
 							disabled={!currentSong}
 						>
@@ -114,7 +114,7 @@ export const PlaybackControls = () => {
 						<Button
 							size='icon'
 							variant='ghost'
-							className='hidden sm:inline-flex hover:text-white text-zinc-400'
+							className='hidden sm:inline-flex hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
 						>
 							<Repeat className='h-4 w-4' />
 						</Button>
@@ -134,18 +134,18 @@ export const PlaybackControls = () => {
 				</div>
 				{/* volume controls */}
 				<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end'>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
 						<Mic2 className='h-4 w-4' />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
 						<ListMusic className='h-4 w-4' />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
 						<Users className='h-4 w-4' />
 					</Button>
 
 					<div className='flex items-center gap-2'>
-						<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+						<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
 							<Volume1 className='h-4 w-4' />
 						</Button>
 

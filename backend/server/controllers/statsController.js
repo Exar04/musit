@@ -32,7 +32,7 @@ export const getStats = async (req, res) => {
                 }
             ])
         ]);
-        res.status(200).json({ totalSongs, totalAlbums, totalUsers });
+        res.status(200).json({ totalSongs, totalAlbums, totalUsers, totalArtists: uniqueArtists[0]?.count || 0 });
 
     } catch (error) {
         console.log("Error in stats route: ", error)

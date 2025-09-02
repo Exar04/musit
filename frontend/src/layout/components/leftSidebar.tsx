@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useMusicStore } from "@/stores/useMusicStore";
-import { HomeIcon, Library } from "lucide-react";
+import { HomeIcon, Library, MessageSquareTextIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -39,7 +39,7 @@ export function LeftSidebar() {
                             },
                         ))}
                     >
-                        <HomeIcon className=" mr-2 size-5 " />
+                        <MessageSquareTextIcon className=" mr-2 size-5 " />
                         <span className=" hidden md:inline">messages</span>
                     </Link>
                 </div>
