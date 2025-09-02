@@ -46,9 +46,9 @@ export const AddAlbumDialog = () => {
 			formData.append("title", newAlbum.title);
 			formData.append("artist", newAlbum.artist);
 			formData.append("releaseYear", newAlbum.releaseYear.toString());
-			formData.append("imageFile", imageFile);
+			formData.append("image", imageFile);
 
-			await serviceApi.post("/admin/albums", formData, {
+			await serviceApi.post("/admin/album/create", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},

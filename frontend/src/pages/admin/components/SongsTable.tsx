@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useMusicStore } from "@/stores/useMusicStore";
 import { Calendar, Trash2 } from "lucide-react";
+import { motion } from "framer-motion"
 
 const SongsTable = () => {
 	const { songs, isLoadingSongs, error, deleteSong } = useMusicStore();
@@ -22,6 +23,32 @@ const SongsTable = () => {
 		);
 	}
 
+	const popInContainerVariants = {
+		hidden: { opacity: 0 },
+		visible: {
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.2, // delay between each button popping
+			},
+		},
+	}
+
+	const popInItemVariants = {
+		hidden: { opacity: 0, scale: 0.5 },
+		visible: {
+			opacity: 1,
+			scale: 1,
+			transition: {
+				type: "spring" as const,
+				stiffness: 120,
+				damping: 8,
+			},
+		},
+	}
+
+	const MotionTableBody = motion(TableBody)
+	const MotionTableRow = motion(TableRow)
+
 	return (
 		<Table>
 			<TableHeader>
@@ -34,9 +61,22 @@ const SongsTable = () => {
 				</TableRow>
 			</TableHeader>
 
-			<TableBody>
+
+			<MotionTableBody
+				variants={popInContainerVariants}
+				initial="hidden"
+				animate="visible"
+			>
+
+				{/* <TableBody> */}
 				{songs.map((song) => (
-					<TableRow key={song._id} className='hover:bg-zinc-800/50 border-zinc-700'>
+					// <TableRow key={song._id} className='hover:bg-zinc-800/50 border-zinc-700'>
+					<MotionTableRow
+						key={song._id}
+						variants={popInItemVariants}
+						className="hover:bg-zinc-800/50 border-zinc-700"
+					>
+
 						<TableCell>
 							<img src={song.imageUrl} alt={song.title} className='size-10 rounded object-cover' />
 						</TableCell>
@@ -61,9 +101,11 @@ const SongsTable = () => {
 								</Button>
 							</div>
 						</TableCell>
-					</TableRow>
+					</MotionTableRow>
+					// </TableRow>
 				))}
-			</TableBody>
+				{/* </TableBody> */}
+			</MotionTableBody>
 		</Table>
 	);
 };

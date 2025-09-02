@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion"
 import { Slider } from "@/components/ui/slider";
 import { usePlayerStore } from "@/stores/usePlayerStore";
 import { ListMusic, Mic2, Pause, Play, Repeat, Shuffle, SkipBack, SkipForward, Users, Volume1 } from "lucide-react";
@@ -11,7 +12,7 @@ const formatTime = (seconds: number) => {
 };
 
 export const PlaybackControls = () => {
-	const { currentSong, isPlaying, togglePlay, playNext, playPrevious } = usePlayerStore();
+	const { currentSong, isPlaying, togglePlay, playNext, playPrevious, activeWindow, setActiveWindow } = usePlayerStore();
 
 	const [volume, setVolume] = useState(75);
 	const [currentTime, setCurrentTime] = useState(0);
@@ -49,6 +50,31 @@ export const PlaybackControls = () => {
 		}
 	};
 
+
+	const popInContainerVariants = {
+		hidden: { opacity: 0 },
+		visible: {
+			opacity: 1,
+			transition: {
+				staggerChildren: 0.2, // delay between each button popping
+			},
+		},
+	}
+
+	const popInItemVariants = {
+		hidden: { opacity: 0, scale: 0.5 },
+		visible: {
+			opacity: 1,
+			scale: 1,
+			transition: {
+				type: "spring" as const,
+				stiffness: 120,
+				damping: 8,
+			},
+		},
+	}
+
+
 	return (
 		<footer className='h-18 bg-zinc-900 border-t border-zinc-800 px-4'>
 			<div className='flex justify-between items-center h-full max-w-[1800px] mx-auto'>
@@ -62,7 +88,7 @@ export const PlaybackControls = () => {
 								className='w-14 h-14 object-cover rounded-md'
 							/>
 							<div className='flex-1 min-w-0'>
-								<div className='font-medium truncate hover:underline cursor-pointer'>
+								<div onClick={() => setActiveWindow("songDetails")} className='font-medium truncate hover:underline cursor-pointer'>
 									{currentSong.title}
 								</div>
 								<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer'>
@@ -76,48 +102,108 @@ export const PlaybackControls = () => {
 				{/* player controls*/}
 				<div className='flex flex-col items-center gap-2 flex-1 max-w-full sm:max-w-[45%]'>
 					<div className='flex items-center gap-4 sm:gap-6'>
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hidden sm:inline-flex hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
+						<motion.div
+							initial={{ opacity: 0, y: -20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{
+								type: "spring",
+								stiffness: 200,  // lower = slower, less snappy
+								damping: 3,    // lower = more bounce
+								mass: 1.2,      // feels a bit heavier
+							}}
 						>
-							<Shuffle className='h-4 w-4' />
-						</Button>
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hidden sm:inline-flex hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
+							>
+								<Shuffle className='h-4 w-4' />
+							</Button>
+						</motion.div>
 
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
-							onClick={playPrevious}
-							disabled={!currentSong}
+						<motion.div
+							initial={{ opacity: 0, y: -20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{
+								type: "spring",
+								stiffness: 200,  // lower = slower, less snappy
+								damping: 5,    // lower = more bounce
+								mass: 1.2,      // feels a bit heavier
+							}}
 						>
-							<SkipBack className='h-4 w-4' />
-						</Button>
 
-						<Button
-							size='icon'
-							className='bg-white hover:bg-white/80 text-black rounded-full h-8 w-8'
-							onClick={togglePlay}
-							disabled={!currentSong}
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
+								onClick={playPrevious}
+								disabled={!currentSong}
+							>
+								<SkipBack className='h-4 w-4' />
+							</Button>
+						</motion.div>
+
+						<motion.div
+							initial={{ opacity: 0, y: -20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{
+								type: "spring",
+								stiffness: 300,  // lower = slower, less snappy
+								damping: 8,    // lower = more bounce
+								mass: 2.2,      // feels a bit heavier
+							}}
 						>
-							{isPlaying ? <Pause className='h-5 w-5' /> : <Play className='h-5 w-5' />}
-						</Button>
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
-							onClick={playNext}
-							disabled={!currentSong}
+
+							<Button
+								size='icon'
+								className='bg-white hover:bg-white/80 text-black rounded-full h-8 w-8'
+								onClick={togglePlay}
+								disabled={!currentSong}
+							>
+								{isPlaying ? <Pause className='h-5 w-5' /> : <Play className='h-5 w-5' />}
+							</Button>
+						</motion.div>
+						<motion.div
+							initial={{ opacity: 0, y: -20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{
+								type: "spring",
+								stiffness: 200,  // lower = slower, less snappy
+								damping: 5,    // lower = more bounce
+								mass: 1.2,      // feels a bit heavier
+							}}
 						>
-							<SkipForward className='h-4 w-4' />
-						</Button>
-						<Button
-							size='icon'
-							variant='ghost'
-							className='hidden sm:inline-flex hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
+
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
+								onClick={playNext}
+								disabled={!currentSong}
+							>
+								<SkipForward className='h-4 w-4' />
+							</Button>
+						</motion.div>
+
+						<motion.div
+							initial={{ opacity: 0, y: -20 }}
+							animate={{ opacity: 1, y: 0 }}
+							transition={{
+								type: "spring",
+								stiffness: 200,  // lower = slower, less snappy
+								damping: 3,    // lower = more bounce
+								mass: 1.2,      // feels a bit heavier
+							}}
 						>
-							<Repeat className='h-4 w-4' />
-						</Button>
+
+							<Button
+								size='icon'
+								variant='ghost'
+								className='hidden sm:inline-flex hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'
+							>
+								<Repeat className='h-4 w-4' />
+							</Button>
+						</motion.div>
 					</div>
 
 					<div className='hidden sm:flex items-center gap-2 w-full'>
@@ -133,16 +219,28 @@ export const PlaybackControls = () => {
 					</div>
 				</div>
 				{/* volume controls */}
-				<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end'>
-					<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
-						<Mic2 className='h-4 w-4' />
+				{/* <div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end'> */}
+				<motion.div
+					className="hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end"
+					variants={popInContainerVariants}
+					initial="hidden"
+					animate="visible">
+
+					<motion.div variants={popInItemVariants}>
+						<Button onClick={() => setActiveWindow("lyrics")} size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
+							<Mic2 className={`h-4 w-4 ${activeWindow === "lyrics" ? " text-green-500" : ""}`} />
+						</Button>
+					</motion.div>
+					<motion.div variants={popInItemVariants}>
+					<Button onClick={() => setActiveWindow("queue")} size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
+						<ListMusic className={`h-4 w-4 ${activeWindow === "queue" ? " text-green-500" : ""}`} />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
-						<ListMusic className='h-4 w-4' />
+					</motion.div>
+					<motion.div variants={popInItemVariants}>
+					<Button onClick={() => setActiveWindow("friendsList")} size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
+						<Users className={`h-4 w-4 ${activeWindow === "friendsList" ? " text-green-500" : ""}`} />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
-						<Users className='h-4 w-4' />
-					</Button>
+					</motion.div>
 
 					<div className='flex items-center gap-2'>
 						<Button size='icon' variant='ghost' className='hover:text-green-400 hover:bg-zinc-400/30 text-zinc-400'>
@@ -162,7 +260,8 @@ export const PlaybackControls = () => {
 							}}
 						/>
 					</div>
-				</div>
+				</motion.div>
+				{/* </div> */}
 			</div>
 		</footer>
 	);

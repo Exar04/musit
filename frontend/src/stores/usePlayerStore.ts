@@ -6,6 +6,7 @@ interface PlayerStore {
     isPlaying: boolean
     queue: SongType[]
     currentIndex: number
+    activeWindow: string | null
 
     initalizeQueue: (songs: SongType[]) => void
     playAlbum: (songs: SongType[], startIndex?: number) => void
@@ -14,6 +15,7 @@ interface PlayerStore {
     playNext: () => void
     playPrevious: () => void
     addToQueue: (song: SongType) => void
+    setActiveWindow: (window: string) => void
 }
 
 export const usePlayerStore = create<PlayerStore>((set, get) => ({
@@ -21,6 +23,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     isPlaying: false,
     queue: [],
     currentIndex: 0,
+    activeWindow: "friendsList", // this could be friendsList, queue, songDetails, lyrics ...
 
     initalizeQueue: (songs: SongType[]) => {
         set({
@@ -94,6 +97,12 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
         }
     },
 
-    // TODO: add to queue function
+    setActiveWindow: (window: string) => {
+        set({
+            activeWindow: window
+        })
+    },
+
+    // TODO: add a particular song to queue function
     addToQueue: (song: SongType) => {console.log(song)},
 }))
