@@ -60,10 +60,10 @@ const AddSongDialog = () => {
 				formData.append("albumId", newSong.album);
 			}
 
-			formData.append("audioFile", files.audio);
-			formData.append("imageFile", files.image);
+			formData.append("song", files.audio);
+			formData.append("image", files.image);
 
-			await serviceApi.post("/admin/songs", formData, {
+			await serviceApi.post("/admin/song/create", formData, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 				},
@@ -82,6 +82,7 @@ const AddSongDialog = () => {
 			});
 			toast.success("Song added successfully");
 		} catch (error: any) {
+			console.log("Failed to add song: " + error.message);
 			toast.error("Failed to add song: " + error.message);
 		} finally {
 			setIsLoading(false);
@@ -210,7 +211,7 @@ const AddSongDialog = () => {
 					<Button variant='outline' onClick={() => setSongDialogOpen(false)} disabled={isLoading}>
 						Cancel
 					</Button>
-					<Button onClick={handleSubmit} disabled={isLoading}>
+					<Button onClick={handleSubmit} disabled={isLoading} className=" bg-white text-black hover:bg-zinc-300">
 						{isLoading ? "Uploading..." : "Add Song"}
 					</Button>
 				</DialogFooter>

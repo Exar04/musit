@@ -5,11 +5,18 @@ import adminRoutes from './routes/adminRoutes.js';
 import songRoutes from './routes/songRoutes.js';
 import albumRoutes from './routes/albumRoutes.js';
 import statsRoutes from './routes/statsRoutes.js';
+// import path from "path";
+// import { fileURLToPath } from "url";
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 const app = express();
 
 app.use(cors());
 app.use(json());
+
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use('/users', userRoutes);
 app.use('/admin', adminRoutes);

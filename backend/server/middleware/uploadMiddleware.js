@@ -1,20 +1,27 @@
-import multer from "multer";
 import path from "path";
 import fs from "fs";
+import multer from "multer";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let uploadPath
+    let uploadPath;
+
     if (file.fieldname === "image") {
-      uploadPath = "uploads/images"
-      cb(null, "uploads/images");
+      uploadPath = path.join(__dirname, "../../../frontend/public/uploads/images");
     } else if (file.fieldname === "song") {
-      uploadPath = "uploads/songs"
-      cb(null, "uploads/songs");
+      uploadPath = path.join(__dirname, "../../../frontend/public/uploads/songs");
     } else {
-      cb(new Error("Invalid field name"), false);
+      return cb(new Error("Invalid field name"), false);
     }
+
+    // ensure folder exists
     fs.mkdirSync(uploadPath, { recursive: true });
+
+    cb(null, uploadPath); // use the absolute path
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
