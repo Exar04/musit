@@ -43,15 +43,15 @@ export const ChatPage = () => {
 
 							{/* Messages */}
 							<ScrollArea className='h-[calc(100vh-260px)]'>
-								<div className='p-4 space-y-4'>
+								<div className='p-1 space-y-1'>
 									{messages.map((message) => (
 										<div
 											key={message._id}
-											className={`flex items-start gap-3 ${
+											className={`flex items-start gap-1 ${
 												message.senderId === userId ? "flex-row-reverse" : ""
 											}`}
 										>
-											<Avatar className='size-8'>
+											<Avatar className='size-2'>
 												<AvatarImage
 													src={
 														message.senderId === userId
@@ -62,8 +62,8 @@ export const ChatPage = () => {
 											</Avatar>
 
 											<div
-												className={`rounded-lg p-3 max-w-[70%]
-													${message.senderId === userId ? "bg-green-500" : "bg-zinc-800"}
+												className={`rounded-lg p-2 max-w-[70%]
+													${message.senderId === userId ? "bg-green-500/80" : "bg-zinc-800"}
 												`}
 											>
 												<p className='text-sm'>{message.content}</p>
