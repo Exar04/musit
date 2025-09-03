@@ -9,7 +9,7 @@ import { Login } from './pages/login.tsx';
 import { Signup } from './pages/siginup.tsx';
 import { NoPage } from './pages/noPage.tsx';
 import { HomePage } from './pages/homePage.tsx';
-import { ChatPage } from './pages/chatPage.tsx';
+import { ChatPage } from './pages/chat/chatPage.tsx';
 import MainLayout from './layout/mainLayout.tsx';
 import { AlbumPage } from './pages/albumPage.tsx';
 import { AdminPage } from './pages/admin/adminPage.tsx';

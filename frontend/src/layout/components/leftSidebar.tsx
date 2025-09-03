@@ -102,7 +102,7 @@ export function LeftSidebar() {
                                 animate="visible">
 
                                 {albums.map((album) => (
-                                    <motion.div variants={popInItemVariants}>
+                                    <motion.div variants={popInItemVariants} key={album._id}>
                                         <Link
                                             to={`album/${album._id}`}
                                             key={album._id}

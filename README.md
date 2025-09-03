@@ -1,25 +1,23 @@
 Features -
 - Microservice based
 - Integrated telemetry (Otel, loki, promethus, jeagerUI, grafana)
-- video/audio files are loaded using streams and thus optimizing memory consumption by 300% ( before 300mb usage -> after 3mb)
 - Jwt auth implemented from scratch with register user, login user, and refresh token functionality
 - passwords are base64 encoded
 - communication between servers is done via gRPC protocol, optimizing communication by 400%
-- video/audio is streamd to cliend via http live streaming (HLS) thus reducing load time
-- pre loads next audio/video so that user doesn't experience any lag
+<!-- - video/audio is streamd to cliend via http live streaming (HLS) thus reducing load time -->
 - All services are dockerised and can easily set up and run via docker
 - User can upload, delete songs, edit bio, chat with other users, see what song other users are listening to
 - UI is dynamic and components are dragable like in spotify webUI
 - State management using zustand
-- Tests implemented using jest
+<!-- - Tests implemented using jest -->
 - Infinte scroll ... in the queue list of songs user will get more songs as they scroll down
 - smooth UI animations making immersive ux.
 - statistical data for admin user
 - linux styled git commit for better developer usablility
 - Integrated user chat functionality where users can chat and see what their friends are listening to
 - Ambient shader for albums background based on album cover
-- Global Search in frontend with `command + k` which has `lazyload` functionality so that app doesn't get blocked
-- create a link to invite/add friend to your friend list
+<!-- - Global Search in frontend with `command + k` which has `lazyload` functionality so that app doesn't get blocked -->
+<!-- - create a link to invite/add friend to your friend list -->
 ---
 Internals -
 - auth-db is running on port 27017

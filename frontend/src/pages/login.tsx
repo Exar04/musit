@@ -10,6 +10,8 @@ import type { AxiosError } from 'axios';
 interface LoginResponse {
   username: string;
   token: string;
+  _id: string;
+  email: string
 }
 
 export function Login() {
@@ -27,7 +29,8 @@ export function Login() {
         password,
       });
 
-      login(response.data.username, response.data.token);
+      login(response.data.username, response.data.token, response.data._id);
+      console.log("response.data._id : ", response.data._id)
       setError(null);
       navigate('/');
     } catch (err) {

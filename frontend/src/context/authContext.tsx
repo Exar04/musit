@@ -8,11 +8,13 @@ import {
 import type { ReactNode } from 'react';
 import axios, { type InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { useChatStore } from '@/stores/useChatStore';
 
 interface AuthContextType {
   user: string | null;
   token: string | null;
-  login: (userData: string, token: string) => void;
+  userId: string | null;
+  login: (userData: string, token: string, userId: string) => void;
   logout: () => void;
 }
 
@@ -31,40 +33,51 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { checkAdminStatus } = useAuthStore()
-
-  const login = (userData: string, token: string) => {
-    setUser(userData);
+  const { initSocket, disconnectSocket } = useChatStore()
+  const login = (username: string, token: string, userId: string) => {
+    setUser(username);
     setToken(token);
+    setUserId(userId)
     localStorage.setItem('token', token);
-    localStorage.setItem('user', userData);
+    localStorage.setItem('user', username);
+    localStorage.setItem('userId', userId)
     // If userData is an object, use: localStorage.setItem('user', JSON.stringify(userData));
   };
 
   const logout = () => {
     setUser(null);
+    setUserId(null);
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('userId');
   };
   useEffect(() => {
-    const init = async () => {
+    const initAuth = async () => {
       const storedToken = localStorage.getItem('token');
       const storedUser = localStorage.getItem('user');
+      const storedUserId = localStorage.getItem('userId');
 
       if (storedToken && storedUser) {
         setToken(storedToken);
         setUser(storedUser);
-        await checkAdminStatus(); // ✅ now you can await
+        setUserId(storedUserId)
+        await checkAdminStatus()
+        // if (userId) initSocket(userId);
+        if (storedUserId) initSocket(storedUserId)
       }
 
       setLoading(false);
     };
 
-    init();
-  }, []);
+    initAuth();
+
+    return () => disconnectSocket()
+  }, [token, checkAdminStatus, initSocket, disconnectSocket]);
 
 
   useLayoutEffect(() => {
@@ -85,7 +98,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   if (loading) return null;
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, userId, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
