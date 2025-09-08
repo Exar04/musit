@@ -10,6 +10,7 @@ Features -
 - UI is dynamic and components are dragable like in spotify webUI
 - State management using zustand
 <!-- - Tests implemented using jest -->
+<!-- - using webpack and bable for js optimization -->
 - Infinte scroll ... in the queue list of songs user will get more songs as they scroll down
 - smooth UI animations making immersive ux.
 - statistical data for admin user
@@ -78,13 +79,13 @@ Internals -
 ## How to use it :
 
 ### set up ->
-Manually - 
+Startup servers - 
 ```bash
 cd backend/server && npm install && npm start
 cd backend/auth && npm install && npm start
 cd frontend && npm install && npm start
 ```
-Docker - 
+Startup databases - 
 ```zsh
 docker compose up
 ```

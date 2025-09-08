@@ -4,8 +4,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/context/authContext";
 import UsersList from "./components/UsersList";
-import ChatHeader from "./components/chatHeader";
-import MessageInput from "./components/messageInput";
+import ChatHeader from "./components/ChatHeader";
+import MessageInput from "./components/MessageInput";
 import { MessageCircleDashed } from "lucide-react";
 
 const formatTime = (date: string) => {
@@ -27,8 +27,6 @@ export const ChatPage = () => {
 	useEffect(() => {
 		if (selectedUser) fetchMessages(selectedUser.userId);
 	}, [selectedUser, fetchMessages]);
-
-	console.log( "messa : ", messages );
 
 	return (
 		<main className='h-full rounded-lg bg-zinc-900/80 overflow-hidden'>
