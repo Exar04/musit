@@ -11,6 +11,7 @@ Features -
 - State management using zustand
 <!-- - Tests implemented using jest -->
 <!-- - using webpack and bable for js optimization -->
+<!-- - Testing in ci/cd using github actions -->
 - Infinte scroll ... in the queue list of songs user will get more songs as they scroll down
 - smooth UI animations making immersive ux.
 - statistical data for admin user
@@ -97,3 +98,12 @@ docker compose up
 - how exactly does gRPC works? also learn its internals 
 - Learn how these event listeners work -> audio.addEventListener("timeupdate", updateTime) && audio.removeEventListener("loadedmetadata", updateDuration)
 -->
+
+
+<!-- npm install @opentelemetry/sdk-node \
+  @opentelemetry/api \
+  @opentelemetry/auto-instrumentations-node \
+  @opentelemetry/sdk-metrics \
+  @opentelemetry/sdk-trace-node \
+  @opentelemetry/resources \
+  @opentelemetry/semantic-conventions -->
