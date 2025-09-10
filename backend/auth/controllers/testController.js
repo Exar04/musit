@@ -1,5 +1,7 @@
-import { trace, SpanStatusCode } from "@opentelemetry/api";
-const tracer = trace.getTracer('testRoute', '1.0');
+import { trace, SpanStatusCode, metrics } from "@opentelemetry/api";
+
+const tracer = trace.getTracer('test-route', '1.0');
+const meter = metrics.getMeter('test-route', '1.0')
 
 // Controller with instrumentation
 const test = async (req, res) => {

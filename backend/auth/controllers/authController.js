@@ -1,10 +1,20 @@
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import grpcClient from '../grpc/userService.js';
+import { trace, SpanStatusCode, metrics, ValueType } from "@opentelemetry/api"
+import winston from "winston"
 
-import { trace, SpanStatusCode } from "@opentelemetry/api"
+const tracer = trace.getTracer('auth-lib', '1.0')
+const logger = winston.createLogger()
+const meter = metrics.getMeter('auth-lib', '1.0')
+const lcounter = meter.createCounter("auth-lib.login.counter", "1.0")
+const rcounter = meter.createCounter("auth-lib.register.counter", "1.0")
+const histogram = meter.createHistogram("http.server.duration", {
+    description: "HTTP server request duration in ms",
+    unit: "milliseconds",
+    valueType: ValueType.INT
 
-const tracer = trace.getTracer('auth-lib')
+})
 
 const generateToken = (user) => {
     return tracer.startActiveSpan("generateJwtToken", (span) => {
@@ -48,7 +58,7 @@ const oldregisterUser = async (req, res) => {
 
             grpcClient.RegisterUser({ username, email, userid: user._id.toString() }, (err, response) => {
                 if (err) {
-                    console.error("gRPC Error:", err.message);
+                    logger.error("gRPC Error:", err.message);
                     // Don’t fail the request if gRPC call fails
                     return res.status(201).json({
                         _id: user._id,
@@ -59,7 +69,7 @@ const oldregisterUser = async (req, res) => {
                     });
                 }
 
-                console.log("gRPC Response:", response);
+                // console.log("gRPC Response:", response);
 
                 res.status(201).json({
                     _id: user._id,
@@ -73,7 +83,7 @@ const oldregisterUser = async (req, res) => {
             res.status(400).json({ message: 'Invalid user data' });
         }
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -84,7 +94,8 @@ const oldregisterUser = async (req, res) => {
 export const registerUser = async (req, res) => {
     const span = tracer.startSpan('registerUser');
     span.setAttribute('app.route', '/auth/register');
-
+    const startTime = new Date().getTime()
+    rcounter.add(1)
     try {
         span.addEvent('Register user process started');
 
@@ -142,7 +153,7 @@ export const registerUser = async (req, res) => {
                         if (err) {
                             grpcSpan.recordException(err);
                             grpcSpan.setStatus({ code: SpanStatusCode.ERROR, message: err.message });
-                            console.error('gRPC Error:', err.message);
+                            logger.error('gRPC Error:', err.message);
 
                             grpcSpan.end();
                             return res.status(201).json({
@@ -158,7 +169,7 @@ export const registerUser = async (req, res) => {
                         grpcSpan.setStatus({ code: SpanStatusCode.UNSET });
                         grpcSpan.end();
 
-                        console.log('gRPC Response:', response);
+                        logger.log('gRPC Response:', response);
 
                         res.status(201).json({
                             _id: user._id,
@@ -181,11 +192,14 @@ export const registerUser = async (req, res) => {
     } catch (error) {
         span.recordException(error);
         span.setStatus({ code: SpanStatusCode.ERROR, message: error.message });
-        console.error('Error in registerUser:', error);
+        logger.error('Error in registerUser:', error);
 
         res.status(500).json({ message: 'Server error', error: { message: error.message, stack: error.stack } });
 
     } finally {
+        const endTime = new Date().getTime()
+        const executionTime = endTime - startTime
+        histogram.record(executionTime, { route: '/auth/register', method: 'POST' });
         span.end();
     }
 };
@@ -196,7 +210,8 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     const span = tracer.startSpan('loginUser');
     span.setAttribute('app.route', '/auth/login');
-
+    const startTime = new Date().getTime()
+    lcounter.add(1)
     try {
         span.addEvent('Login process started');
 
@@ -254,6 +269,9 @@ export const loginUser = async (req, res) => {
         });
 
     } finally {
+        const endTime = new Date().getTime()
+        const executionTime = endTime - startTime
+        histogram.record(executionTime, { route: '/auth/login', method: 'POST' });
         span.end();
     }
 };

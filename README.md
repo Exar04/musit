@@ -12,6 +12,7 @@ Features -
 <!-- - Tests implemented using jest -->
 <!-- - using webpack and bable for js optimization -->
 <!-- - Testing in ci/cd using github actions -->
+<!-- production grade logging using windsten -->
 - Infinte scroll ... in the queue list of songs user will get more songs as they scroll down
 - smooth UI animations making immersive ux.
 - statistical data for admin user
@@ -106,4 +107,7 @@ docker compose up
   @opentelemetry/sdk-metrics \
   @opentelemetry/sdk-trace-node \
   @opentelemetry/resources \
-  @opentelemetry/semantic-conventions -->
+  @opentelemetry/semantic-conventions 
+  @opentelemetry/sdk-logs \
+  @opentelemetry/winston-transport
+  -->
