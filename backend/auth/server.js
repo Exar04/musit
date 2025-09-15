@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import './lib/instrumentation.js'
 import app from './app.js';
 import connectDB from './config/db.js';
 import winston from 'winston';

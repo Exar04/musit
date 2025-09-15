@@ -1,23 +1,31 @@
 import { NodeSDK } from "@opentelemetry/sdk-node"
-import { ConsoleSpanExporter } from "@opentelemetry/sdk-trace-node"
-import { PeriodicExportingMetricReader, ConsoleMetricExporter } from "@opentelemetry/sdk-metrics"
 import { getNodeAutoInstrumentations } from "@opentelemetry/auto-instrumentations-node"
-import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions"
-import { defaultResource } from '@opentelemetry/resources'
-import { ConsoleLogRecordExporter, SimpleLogRecordProcessor } from "@opentelemetry/sdk-logs"
+import { ATTR_SERVER_ADDRESS, ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from "@opentelemetry/semantic-conventions"
+import { resourceFromAttributes } from '@opentelemetry/resources'
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http"
+import { PrometheusExporter } from '@opentelemetry/exporter-prometheus';
+import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-proto"
+
+
+// Create Prometheus exporter
+const prometheusExporter = new PrometheusExporter({
+  port: 9464,
+});
+
+// Log when metrics are available
+prometheusExporter.startServer().then(() => {
+  console.log('Prometheus metrics available at http://localhost:9464/metrics');
+});
 
 const sdk = new NodeSDK({
-    resource: defaultResource({
+    resource: new resourceFromAttributes({
         [ATTR_SERVICE_NAME]: 'auth-server',
         [ATTR_SERVICE_VERSION]: '1.0',
     }),
-    traceExporter: new ConsoleSpanExporter(),
-    metricReaders: [
-        new PeriodicExportingMetricReader({
-            exporter: new ConsoleMetricExporter(),
-        }),
-    ],
-    logRecordProcessors: [ new SimpleLogRecordProcessor(new ConsoleLogRecordExporter())],
+    traceExporter: new OTLPTraceExporter({
+        url: 'http://localhost:4318/v1/traces',
+    }),
+    metricReader: prometheusExporter,
     instrumentations: [getNodeAutoInstrumentations()]
 })
 
